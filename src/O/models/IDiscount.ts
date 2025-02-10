@@ -1,3 +1,3 @@
-export interface Discount {
+export interface IDiscount {
   applyDiscount(price: number): number;
 }

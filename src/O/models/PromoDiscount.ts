@@ -1,6 +1,6 @@
-import { Discount } from "./Discount";
+import { IDiscount } from "./IDiscount";
 
-export class PromoDiscount implements Discount {
+export class PromoDiscount implements IDiscount {
   applyDiscount(price: number): number {
     return price * 0.85;
   }
