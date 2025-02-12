@@ -1,27 +1,29 @@
+import { StockErrorMessages } from "../enums/StockErrorMessages";
+import { StockErrors } from "../errors/StockErrors";
 import { ProductRegister } from "../models/ProductRegister";
 
 export class StockService {
-  private _productsIDs: string[] = [];
-  private _productQuantity: number[] = [];
-  private _productPrices: number[] = [];
+  productsIDs: string[] = [];
+  productQuantity: number[] = [];
+  productPrices: number[] = [];
 
   constructor(
     productsIDs: string[],
     productQuantity: number[],
     productPrices: number[]
   ) {
-    this._productsIDs = productsIDs;
-    this._productQuantity = productQuantity;
-    this._productPrices = productPrices;
+    this.productsIDs = productsIDs;
+    this.productQuantity = productQuantity;
+    this.productPrices = productPrices;
   }
 
   updateStock(productList: ProductRegister[]) {
     if (!this.checkStock(productList)) {
-      throw new Error();
+      throw new StockErrors(StockErrorMessages.UPDATESTOCK_ERROR_MESSAGE);
     }
     productList.forEach((product) => {
       const index = this.getIndexById(product.productID);
-      this._productQuantity[index] -= product.quantity;
+      this.productQuantity[index] -= product.quantity;
     });
   }
 
@@ -30,7 +32,7 @@ export class StockService {
     productList.forEach((product) => {
       const index = this.getIndexById(product.productID);
       if (index !== -1) {
-        if (this._productQuantity[index] < product.quantity) {
+        if (this.productQuantity[index] < product.quantity) {
           isInStock = false;
         }
       } else {
@@ -41,17 +43,17 @@ export class StockService {
   }
 
   getIndexById(productID: string) {
-    return this._productsIDs.indexOf(productID);
+    return this.productsIDs.indexOf(productID);
   }
 
   getTotalCost(productList: ProductRegister[]): number {
     if (!this.checkStock(productList)) {
-      throw new Error();
+      throw new StockErrors(StockErrorMessages.TOTALCOST_ERROR_MESSAGE);
     }
     let totalCost = 0;
     productList.forEach((product) => {
       const index = this.getIndexById(product.productID);
-      totalCost += this._productPrices[index];
+      totalCost += this.productPrices[index];
     });
     return totalCost;
   }

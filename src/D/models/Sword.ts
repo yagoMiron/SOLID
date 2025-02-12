@@ -7,7 +7,7 @@ export class Sword implements IWeapon {
   attack(): string {
     if (this.durability > 0) {
       this.durability -= 1;
-      return `Atacando com espada causando ${this.damage} de dano`;
+      return `Atacando com a espada causando ${this.damage} de dano`;
     }
     return `não é possivel atacar com a espada`;
   }

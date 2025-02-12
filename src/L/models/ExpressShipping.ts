@@ -2,7 +2,7 @@ import { IShipping } from "./IShipping";
 
 export class ExpressShipping implements IShipping {
   calculateCost(weight: number): number {
-    return 49.9 + weight * 3.5;
+    return 49.9 + weight * 4;
   }
   ExpectedDeliveryDate(distanceInKm: number, purchaseDate: Date): Date {
     const dayInMilliseconds = 1000 * 60 * 60 * 24;

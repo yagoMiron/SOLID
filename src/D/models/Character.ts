@@ -12,6 +12,6 @@ export class Character {
   }
 
   useWeapon() {
-    console.log(this.weapon.attack());
+    return this.weapon.attack();
   }
 }

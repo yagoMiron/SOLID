@@ -3,13 +3,18 @@ import { PaymentService } from "./PaymentService";
 import { StockService } from "./StockService";
 
 export class PurchaseService {
-  constructor(
-    private paymentService: PaymentService,
-    private stockService: StockService
-  ) {}
+  paymentService: PaymentService;
+  stockService: StockService;
 
-  purchaseProducts(order: Order) {
-    const totalCost = this.stockService.getTotalCost(order.cart);
+  constructor(paymentService: PaymentService, stockService: StockService) {
+    this.paymentService = paymentService;
+    this.stockService = stockService;
+  }
+
+  purchaseProducts(order: Order): string {
+    let totalCost: number;
+    totalCost = this.stockService.getTotalCost(order.cart);
+
     if (
       !this.paymentService.isPaymentPosible(totalCost) ||
       !this.stockService.checkStock(order.cart)
